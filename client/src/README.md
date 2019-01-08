@@ -5,8 +5,14 @@
 * react-router-native: navigation for native apps
 * react-router-redux: Bindind data between Redux and React Router(not necessary) do not recommend this package
 
+# Routers
+you can choose these router
 
-# Basic
+* BrowserRouter
+* HashRouter
+* MemoryRouter
+
+# Basic for BrowserRouter
 
 this is duplicate definination. but it's ok.
 you can see two PageOne Component.
