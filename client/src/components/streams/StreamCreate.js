@@ -2,17 +2,30 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 class StreamCreate extends React.Component {
 
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div> 
+        </div>
+      )
+    }
+
+    return null
+  }
+
   // input and meta is injected by redux-form
-  renderInput({ input, meta, label }) {
-    //console.log(formProps)
-    console.log(meta)
-    
+  // render input use 'this'. so you take care context, yes, use arrow function
+  renderInput = ({ input, meta, label }) => {
+    // you can use react-form prop but {...input} is simply
     // <input onChange={formProps.input.onChange} value={formProps.input.value} />
+
+    const className = `field ${meta.touched && meta.error ? 'error' : ''}`
     return (
-      <div className="field">
+      <div className={className}>
         <label>{label}</label>
         <input {...input} />
-        <div>{meta.error}</div>
+        {this.renderError(meta)}
       </div>
     )
   }
@@ -20,7 +33,6 @@ class StreamCreate extends React.Component {
   onSubmit(formProps) {
     // function this.props.handleSubmit is care about preventDefault. so you doun need it manually
     //event.preventDefault()
-
     console.log(formProps)
   }
 
@@ -28,7 +40,7 @@ class StreamCreate extends React.Component {
     // react-redux injects various property
     // console.log(this.props)
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
         <Field name="title" component={this.renderInput} label="Enter Title"/>
         <Field name="description" component={this.renderInput} label="Enter Description" />
         <button className="ui button primary">Submit</button>
