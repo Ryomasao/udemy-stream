@@ -1,14 +1,4 @@
 {
   "streams": [
-    {
-      "title": "hello",
-      "description": "world",
-      "id": 1
-    },
-    {
-      "title": "hello",
-      "description": "world2",
-      "id": 2
-    }
   ]
 }
