@@ -1,8 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { signIn, signOut } from  '../actions'
 
 class GoogleAuth extends React.Component {
-  state = { isSignedIn: null }
-
   componentDidMount() {
     const CLIENT_ID = '398542494414-gj1kvutifkp6cpm850sr578ogm99r2ke.apps.googleusercontent.com'
     window.gapi.load('client:auth2',() => {
@@ -11,38 +11,43 @@ class GoogleAuth extends React.Component {
         scope: 'email'
       }).then(() => {
         this.auth = window.gapi.auth2.getAuthInstance()
-        this.setState({ isSignedIn: this.auth.isSignedIn.get() })
+        this.onAuthChange(this.auth.isSignedIn.get())
+        // this.setState({ isSignedIn: this.auth.isSignedIn.get() })
         // when Auth state is changed, callback is called.
         this.auth.isSignedIn.listen(this.onAuthChange)
       })
     })
   }
 
-  onAuthChange = () => {
-    this.setState({ isSignedIn: this.auth.isSignedIn.get() })
+  onAuthChange = (isSignedIn) => {
+    if (isSignedIn) {
+      this.props.signIn()
+    } else {
+      this.props.signOut()
+    }
   }
 
-  onSignIn = () => {
-    this.auth.signIn()
+  onSignInClick = () => {
+    this.props.signIn()
   }
 
-  onSignOut = () => {
-    this.auth.signOut()
+  onSignOutClick = () => {
+    this.props.signOut()
   }
 
   renderAuthButton() {
-    if (this.state.isSignedIn === null) {
+    if (this.props.isSignedIn === null) {
       return null
-    } else if (this.state.isSignedIn) {
+    } else if (this.props.isSignedIn) {
       return (
-        <button onClick={this.onSignOut} className="ui red google button">
+        <button onClick={this.onSignOutClick} className="ui red google button">
           <i className="icon google" />
           Sign out
         </button>
       )
     } else {
       return (
-        <button onClick={this.onSignIn} className="ui red google button">
+        <button onClick={this.onSignInClick} className="ui red google button">
           <i className="icon google" />
           Sign In with Google
         </button>
@@ -59,4 +64,10 @@ class GoogleAuth extends React.Component {
   }
 }
 
-export default GoogleAuth
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  }
+}
+
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth)
