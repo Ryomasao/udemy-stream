@@ -40,3 +40,13 @@ if you use `exact={true}`,  or simply use `exact`, react-router use path === you
         </div>
       </BrowserRouter>
 '''
+
+# About GoogleAuth
+
+* create New Project on GooglePlatForm
+* SetUp OAuth confirmation
+* Generate on OAtuh Client ID
+* install google's API library
+'''html
+<script src="https://apis.google.com/js/api.js"></script>
+'''
