@@ -1,5 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { createStream } from '../../actions'
 class StreamCreate extends React.Component {
 
   renderError({ error, touched }) {
@@ -30,10 +32,11 @@ class StreamCreate extends React.Component {
     )
   }
 
-  onSubmit(formProps) {
+  onSubmit = (formProps) => {
     // function this.props.handleSubmit is care about preventDefault. so you doun need it manually
     //event.preventDefault()
-    console.log(formProps)
+
+    this.props.createStream(formProps)
   }
 
   render() {
@@ -62,10 +65,10 @@ const validate = formValues => {
   return errors
 }
 
-// when you pass validate Function, reduct-form is call validate function
-// validate func can return error object which inculdes field name
-// idk when validate function is called...
-export default reduxForm({
+const formWrapped = reduxForm({
   form: 'streamCreate',
   validate
 })(StreamCreate)
+
+export default connect(null, { createStream })(formWrapped)
+
