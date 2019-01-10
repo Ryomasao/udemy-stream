@@ -15,7 +15,7 @@ class StreamForm extends React.Component {
     return null
   }
 
-  renderInput = ({ input, meta, label }) => {
+  renderInput = ({ input, meta, label}) => {
     const className = `field ${meta.touched && meta.error ? 'error' : ''}`
     return (
       <div className={className}>
@@ -30,10 +30,12 @@ class StreamForm extends React.Component {
     this.props.onSubmit(formProps)
   }
 
+  // 親コンポーネントにinitialValuesを設定しとくと、
+  // reudx-formがマウントする際に？initalValuesのオブジェクトをもとにFieldの値を設定してくれる。　
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-        <Field name="title" component={this.renderInput} label="Enter Title"/>
+        <Field name="title" component={this.renderInput} label="Enter Title" />
         <Field name="description" component={this.renderInput} label="Enter Description" />
         <button className="ui button primary">Submit</button>
       </form>
