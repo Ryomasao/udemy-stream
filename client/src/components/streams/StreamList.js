@@ -12,10 +12,10 @@ class StreamList extends React.Component {
     if(stream.userId === this.props.currentUserId) {
       return (
         <div className="right floated content">
-          <Link to={`/stream/edit/${stream.id}`} className="ui button primary">
+          <Link to={`/streams/edit/${stream.id}`} className="ui button primary">
             Edit
           </Link>
-          <Link to={`/stream/delete/${stream.id}`} className="ui button negative">
+          <Link to={`/streams/delete/${stream.id}`} className="ui button negative">
             Delete
           </Link>
         </div>
@@ -29,7 +29,9 @@ class StreamList extends React.Component {
         <div className="item" key={stream.id}>
           {this.renderAdmin(stream)}
           <i className="large middle aligned icon camera" />
-          {stream.title}
+          <Link to={`streams/${stream.id}`}>
+            {stream.title}
+          </Link>
           <div className="description">{stream.description}</div>
         </div>
       )
@@ -40,7 +42,7 @@ class StreamList extends React.Component {
     if (this.props.isSignedIn) {
       return (
         <div style={{ textAlign: 'right' }}>
-          <Link to="/stream/new" className="ui button primary">
+          <Link to="/streams/new" className="ui button primary">
             Create Stream
           </Link>
         </div>

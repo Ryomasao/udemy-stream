@@ -30,7 +30,7 @@ class StreamDelete extends React.Component {
           onClick={this.onSubmit} 
           className="ui negative button"
          >Delete</button>
-        <Link className="ui button">Cancel</Link>
+        <Link to="/" className="ui button">Cancel</Link>
       </React.Fragment>
     )
   }
